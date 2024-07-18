@@ -36,6 +36,13 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 IniRead, OverseeApp, %config_path%, SWITCHES, OverseeApplicationExit, 1
 GLOBAL doOverseeApp := OverseeApp
 
+IniRead, LAppExe, %config_path%, CONFIG, LauncherExecutable,
+IniRead, LAppDir, %config_path%, CONFIG, LauncherDirectory,
+GLOBAL CurrentLAppExe := LAppExe
+GLOBAL CurrentLAppDir := LAppDir
+GLOBAL CurrentLaunchApp := LAppDir . "\" . LAppExe
+
+
 IniRead, AppExe, %config_path%, CONFIG, ApplicationExecutable,
 IniRead, AppDir, %config_path%, CONFIG, ApplicationDirectory,
 GLOBAL CurrentAppExe := AppExe
@@ -50,7 +57,7 @@ GLOBAL AppToExit002 := ExitExe002
 GLOBAL AppToExit003 := ExitExe003
 
 
-Run, %CurrentApp%
+Run, %CurrentLaunchApp%
 
 
 If(doOverseeApp="1")
